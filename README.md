@@ -16,7 +16,7 @@ Buckshot roulette is simple JavaScript based game, where players take turns to a
 
 ## Technologies
 
-The game is built using pure `HTML`, `CSS` and `JavaScript`.
+The game is built using `HTML`, `SASS` and `JavaScript`.
 
 ## Status
 

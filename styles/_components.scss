@@ -1,0 +1,279 @@
+@import "variables";
+@import "mixins";
+
+// Screens, buttons, etc.
+.panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  @include border(gray);
+  background: black;
+  pointer-events: none;
+  cursor: pointer;
+
+  &.active {
+    @include border($primary);
+  }
+
+  // &__img {
+  // }
+
+  &__info {
+    height: 64px;
+    color: white;
+    padding: 6px 0;
+
+    span {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    // p {
+    // }
+
+    %playing-text {
+      content: "Playing";
+      position: absolute;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5;
+      left: 0;
+      color: $primary;
+    }
+
+    &#player1Btn::before {
+      @extend %playing-text;
+      bottom: -24px;
+    }
+
+    &#player2Btn::before {
+      @extend %playing-text;
+      top: -24px;
+    }
+  }
+}
+
+.items {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  &#player1Items {
+    margin-bottom: 6px;
+    pointer-events: none;
+  }
+
+  &#player2Items {
+    margin-top: 6px;
+    pointer-events: none;
+  }
+
+  .item {
+    width: 100%;
+    border: 4px solid orange;
+    background: white;
+    cursor: pointer;
+    max-width: 45.5px;
+  }
+}
+
+.screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 30px 0;
+  background: black;
+  border: 5px solid $secondary;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  &__upper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .code {
+      display: flex;
+      gap: 8px;
+
+      #lobbyCode {
+        font-weight: 700;
+        color: $secondary;
+      }
+    }
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1 {
+      font-size: 48px;
+    }
+
+    h2 {
+      font-size: 32px;
+      color: $primary;
+    }
+  }
+
+  &__buttons {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__footer {
+    a {
+      color: $primary;
+    }
+  }
+
+  &#lobbyScreen,
+  &#endScreen {
+    display: none;
+  }
+}
+
+.lobby {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  padding: 0 30px;
+
+  .player {
+    width: 100%;
+    @include border($primary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 60px;
+
+    &__img {
+      width: 50px;
+      height: 50px;
+    }
+
+    // &__info {
+    // }
+
+    &__name {
+      color: $primary;
+      font-weight: 600;
+    }
+
+    &__status {
+      font-size: 14px;
+      color: green;
+    }
+  }
+}
+
+.table {
+  position: relative;
+  width: $game-width;
+  height: $game-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  #mainBtn {
+    rotate: -45deg;
+    cursor: pointer;
+
+    &.toPlayer1 {
+      animation: toPlayer1 500ms;
+      rotate: 90deg;
+    }
+
+    &.toPlayer2 {
+      animation: toPlayer2 500ms;
+      rotate: -90deg;
+    }
+  }
+
+  .shells {
+    position: absolute;
+    bottom: 50px;
+    transform: translateX(50%);
+    pointer-events: none;
+    transition: all $transition-effect;
+
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    &__text {
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .shell {
+      object-fit: cover;
+      height: 40px;
+    }
+
+    &.slide-in {
+      animation: slideIn 500ms ease-in-out;
+      right: 50%;
+    }
+
+    &.slide-out {
+      animation: slideOut 500ms ease-in-out;
+      opacity: 0;
+    }
+  }
+}
+
+.output {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+
+  &.slide-out {
+    animation: slideOut 500ms ease-in-out;
+    opacity: 0;
+  }
+}
+
+.button {
+  background: $secondary;
+  border: none;
+  font-weight: 600;
+  width: 100%;
+
+  &:hover {
+    background: $primary;
+  }
+}

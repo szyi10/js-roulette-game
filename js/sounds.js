@@ -1,6 +1,6 @@
-export const regularClickSound = new Audio("/assets/sounds/regular_shot.mp3")
-export const emptyClickSound = new Audio("/assets/sounds/empty_shot.mp3")
-export const shellSound = new Audio("/assets/sounds/shell.mp3")
+export const regularClickSound = new Audio("./assets/sounds/regular_shot.mp3")
+export const emptyClickSound = new Audio("./assets/sounds/empty_shot.mp3")
+export const shellSound = new Audio("./assets/sounds/shell.mp3")
 
 export function playRegularClickSound() {
   if (regularClickSound.paused) {

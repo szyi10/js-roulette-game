@@ -207,7 +207,7 @@ export class TurnBasedClickGame {
   // Add item button to the player's item display
   addItemButton(item, playerNum) {
     const button = document.createElement("img")
-    button.src = `/assets/items/${item}.png`
+    button.src = `./assets/items/${item}.png`
     button.className = "item"
     button.addEventListener("click", () => this.handleItemClick(item))
 

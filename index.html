@@ -4,28 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Buckshot Roulette</title>
-    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
     <link
       rel="shortcut icon"
-      href="./assets/Portraits/2 Portraits with back/Icons_29.png"
+      href="./assets/avatars/full/Icons_29.png"
       type="image/png"
     />
   </head>
   <body>
-    <main class="container">
-      <div id="player2Btn" class="player">
+    <main class="game">
+      <!-- Player 2 Panel -->
+      <div id="player2Btn" class="panel">
         <img
-          src="./assets/Portraits/1 Portraits/Icons_29.png"
-          alt="Player 2 Portrait"
+          src="./assets/avatars/blank/Icons_29.png"
+          alt="Player 2 avatar"
           width="64"
           height="64"
+          class="panel__img"
         />
-        <div class="player-text">
+        <div class="panel__info">
           <span>Dealer</span>
           <p id="player2Lives">Lives: 5</p>
         </div>
       </div>
-      <div id="player2Items" class="items-container"></div>
+      <!-- Player 2 Items -->
+      <div id="player2Items" class="items"></div>
+
+      <!-- Main Table -->
       <div class="table">
         <img
           id="mainBtn"
@@ -34,55 +39,110 @@
           width="186"
           height="186"
         />
-        <div class="shell-container">
-          <div id="shells"></div>
-          <p id="shell-text"></p>
+        <div class="shells">
+          <div id="shells" class="shells__container"></div>
+          <p id="shell-text" class="shells__text"></p>
         </div>
       </div>
-      <div id="player1Items" class="items-container"></div>
-      <div id="player1Btn" class="player">
+
+      <!-- Player 1 Items -->
+      <div id="player1Items" class="items"></div>
+      <!-- Player 1 Panel -->
+      <div id="player1Btn" class="panel">
         <img
-          src="./assets/Portraits/1 Portraits/Icons_03.png"
-          alt="Player 2 Portrait"
+          src="./assets/avatars/blank/Icons_03.png"
+          alt="Player 1 avatar"
           width="64"
           height="64"
+          class="panel__img"
         />
-        <div class="player-text">
+        <div class="panel__info">
           <span>Player</span>
           <p id="player1Lives">Lives: 5</p>
         </div>
       </div>
 
-      <p id="output"></p>
+      <p id="output" class="output"></p>
 
-      <div id="startScreen">
-        <div class="startScreen-top">
-          <div class="startScreen-title">
+      <!-- Screens -->
+      <div id="startScreen" class="screen">
+        <div class="screen__upper">
+          <div class="screen__title">
             <h1>Buckshot</h1>
             <h2>Roulette</h2>
           </div>
-          <button id="startBtn">Start</button>
+          <div class="screen__buttons">
+            <button id="createBtn" class="button">Create Lobby</button>
+            <button id="joinBtn" class="button">Join Lobby</button>
+          </div>
         </div>
-        <span>Developed by szyi.</span>
+        <span class="screen__footer"
+          >Developed by <a href="https://github.com/szyi10">szyi.</a></span
+        >
       </div>
 
-      <div id="endScreen">
-        <div class="startScreen-top">
-          <div class="startScreen-title">
+      <div id="lobbyScreen" class="screen">
+        <div class="screen__upper">
+          <div class="screen__title">
+            <h1>Buckshot</h1>
+            <h2>Roulette</h2>
+          </div>
+          <div class="lobby">
+            <div class="player">
+              <img
+                src="./assets/avatars/blank/Icons_03.png"
+                alt="Player 1 avatar"
+                class="player__img"
+              />
+              <div class="player__info">
+                <p class="player__name">Player 1</p>
+                <span class="player__status">Connected</span>
+              </div>
+            </div>
+            <div class="player">
+              <img
+                src="./assets/avatars/blank/Icons_29.png"
+                alt="Player 2 avatar"
+                class="player__img"
+              />
+              <div class="player__info">
+                <p class="player__name">Player 2</p>
+                <span class="player__status">Connected</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen__bottom">
+          <div class="code">
+            <span>Lobby Code:</span>
+            <div id="lobbyCode">LKLRQE</div>
+          </div>
+          <button id="startBtn" class="button">Start Game</button>
+        </div>
+      </div>
+
+      <div id="endScreen" class="screen">
+        <div class="screen__upper">
+          <div class="screen__title">
             <h1 id="winner">Player X</h1>
             <h2>won!</h2>
           </div>
-          <button id="restartBtn">Restart</button>
+          <button id="restartBtn" class="button">Restart</button>
         </div>
-        <span>Developed by szyi.</span>
+        <span class="screen__footer"
+          >Developed by <a href="https://github.com/szyi10">szyi.</a></span
+        >
       </div>
     </main>
+
     <audio
       id="regularClickSound"
       src="./assets/sounds/regular_shot.mp3"
     ></audio>
     <audio id="emptyClickSound" src="./assets/sounds/empty_shot.mp3"></audio>
     <audio id="shellSound" src="./assets/sounds/shell.mp3"></audio>
+
+    <script src="/socket.io/socket.io.js"></script>
     <script type="module" src="./js/main.js"></script>
   </body>
 </html>

@@ -1,0 +1,35 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  accent-color: $primary;
+  font-family: $body-font;
+}
+
+main {
+  position: relative;
+}
+
+::selection {
+  background-color: #ff000091;
+}
+
+img {
+  image-rendering: pixelated;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: inherit;
+  cursor: pointer;
+}

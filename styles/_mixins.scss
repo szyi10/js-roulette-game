@@ -1,0 +1,10 @@
+@mixin flexContainer($direction: "row", $justify, $align) {
+  display: flex;
+  font-display: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin border($color) {
+  border: 5px solid $color;
+}
