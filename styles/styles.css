@@ -162,7 +162,7 @@ main {
 #player1Btn.active::before {
   content: "Playing";
   position: absolute;
-  top: -24px;
+  bottom: -24px;
   font-weight: 600;
   font-size: 14px;
   text-transform: uppercase;
@@ -175,7 +175,7 @@ main {
 #player2Btn.active::before {
   content: "Playing";
   position: absolute;
-  bottom: -24px;
+  top: -24px;
   font-weight: 600;
   font-size: 14px;
   text-transform: uppercase;
