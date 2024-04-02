@@ -251,13 +251,11 @@ export class TurnBasedClickGame {
     elements.player2LivesDisplay.textContent = `Lives: ${this.player2.lives}`
 
     if (this.player1.lives <= 0) {
-      console.log("player 1 lose")
-      this.endGame("Player 1")
+      this.endGame("Player 2")
     }
 
     if (this.player2.lives <= 0) {
-      console.log("player 2 lose")
-      this.endGame("Player 2")
+      this.endGame("Player 1")
     }
 
     elements.player1Btn.classList.toggle("active", this.currentPlayer === 1)
