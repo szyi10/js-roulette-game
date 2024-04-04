@@ -1,4 +1,4 @@
-# ![Logo](/assets/Portraits/2%20Portraits%20with%20back/Icons_29.png) Buckshot Roulette
+# ![Logo](/assets/avatars/full/Icons_29.png) Buckshot Roulette
 
 <!-- ## Demo link:
 
