@@ -159,7 +159,7 @@ button {
 .screen__footer a {
   color: red;
 }
-.screen#lobbyScreen, .screen#endScreen {
+.screen#endScreen {
   display: none;
 }
 

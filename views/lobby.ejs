@@ -4,19 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Buckshot Roulette</title>
-    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
     <link
       rel="shortcut icon"
-      href="./assets/avatars/full/Icons_29.png"
+      href="/assets/avatars/full/Icons_29.png"
       type="image/png"
     />
+    <script>
+      const ROOM_ID = "<%= roomId %>"
+    </script>
   </head>
   <body>
     <main class="game">
       <!-- Player 2 Panel -->
       <div id="player2Btn" class="panel">
         <img
-          src="./assets/avatars/blank/Icons_29.png"
+          src="/assets/avatars/blank/Icons_29.png"
           alt="Player 2 avatar"
           width="64"
           height="64"
@@ -34,7 +37,7 @@
       <div class="table">
         <img
           id="mainBtn"
-          src="./assets/Shotgun.png"
+          src="/assets/Shotgun.png"
           alt="Shotgun"
           width="186"
           height="186"
@@ -50,7 +53,7 @@
       <!-- Player 1 Panel -->
       <div id="player1Btn" class="panel">
         <img
-          src="./assets/avatars/blank/Icons_03.png"
+          src="/assets/avatars/blank/Icons_03.png"
           alt="Player 1 avatar"
           width="64"
           height="64"
@@ -65,32 +68,16 @@
       <p id="output" class="output"></p>
 
       <!-- Screens -->
-      <div id="startScreen" class="screen">
-        <div class="screen__upper">
-          <div class="screen__title">
-            <h1>Buckshot</h1>
-            <h2>Roulette</h2>
-          </div>
-          <div class="screen__buttons">
-            <button id="createBtn" class="button">Create Lobby</button>
-            <button id="joinBtn" class="button">Join Lobby</button>
-          </div>
-        </div>
-        <span class="screen__footer"
-          >Developed by <a href="https://github.com/szyi10">szyi.</a></span
-        >
-      </div>
-
       <div id="lobbyScreen" class="screen">
         <div class="screen__upper">
           <div class="screen__title">
             <h1>Buckshot</h1>
             <h2>Roulette</h2>
           </div>
-          <div class="lobby">
-            <div class="player">
+          <div class="lobby" id="lobbyPlayers">
+            <!-- <div class="player">
               <img
-                src="./assets/avatars/blank/Icons_03.png"
+                src="/assets/avatars/blank/Icons_03.png"
                 alt="Player 1 avatar"
                 class="player__img"
               />
@@ -101,7 +88,7 @@
             </div>
             <div class="player">
               <img
-                src="./assets/avatars/blank/Icons_29.png"
+                src="/assets/avatars/blank/Icons_29.png"
                 alt="Player 2 avatar"
                 class="player__img"
               />
@@ -109,13 +96,13 @@
                 <p class="player__name">Player 2</p>
                 <span class="player__status">Connected</span>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="screen__bottom">
           <div class="code">
             <span>Lobby Code:</span>
-            <div id="lobbyCode">LKLRQE</div>
+            <div id="lobbyCode"><%= roomId %></div>
           </div>
           <button id="startBtn" class="button">Start Game</button>
         </div>
@@ -135,14 +122,11 @@
       </div>
     </main>
 
-    <audio
-      id="regularClickSound"
-      src="./assets/sounds/regular_shot.mp3"
-    ></audio>
-    <audio id="emptyClickSound" src="./assets/sounds/empty_shot.mp3"></audio>
-    <audio id="shellSound" src="./assets/sounds/shell.mp3"></audio>
+    <audio id="regularClickSound" src="/assets/sounds/regular_shot.mp3"></audio>
+    <audio id="emptyClickSound" src="/assets/sounds/empty_shot.mp3"></audio>
+    <audio id="shellSound" src="/assets/sounds/shell.mp3"></audio>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="/js/main.js"></script>
   </body>
 </html>
