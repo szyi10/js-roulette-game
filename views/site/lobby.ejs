@@ -74,30 +74,7 @@
             <h1>Buckshot</h1>
             <h2>Roulette</h2>
           </div>
-          <div class="lobby" id="lobbyPlayers">
-            <!-- <div class="player">
-              <img
-                src="/assets/avatars/blank/Icons_03.png"
-                alt="Player 1 avatar"
-                class="player__img"
-              />
-              <div class="player__info">
-                <p class="player__name">Player 1</p>
-                <span class="player__status">Connected</span>
-              </div>
-            </div>
-            <div class="player">
-              <img
-                src="/assets/avatars/blank/Icons_29.png"
-                alt="Player 2 avatar"
-                class="player__img"
-              />
-              <div class="player__info">
-                <p class="player__name">Player 2</p>
-                <span class="player__status">Connected</span>
-              </div>
-            </div> -->
-          </div>
+          <div class="lobby" id="lobbyPlayers"></div>
         </div>
         <div class="screen__bottom">
           <div class="code">
@@ -121,7 +98,7 @@
         >
       </div>
     </main>
-
+    <section><%- include ('../partials/chat') %></section>
     <audio id="regularClickSound" src="/assets/sounds/regular_shot.mp3"></audio>
     <audio id="emptyClickSound" src="/assets/sounds/empty_shot.mp3"></audio>
     <audio id="shellSound" src="/assets/sounds/shell.mp3"></audio>

@@ -3,6 +3,8 @@ import * as elements from "./elements.js"
 import { hideElement, showElement } from "./elements.js"
 
 const activePlayers = document.getElementById("lobbyPlayers")
+const messageInput = document.getElementById("message")
+const form = document.getElementById("message-form")
 
 const socket = io("/")
 const name = `Player ${Math.floor(Math.random() * 9)}`
@@ -10,22 +12,20 @@ const name = `Player ${Math.floor(Math.random() * 9)}`
 socket.on("connect", () => {
   socket.emit("new-user", name)
   socket.emit("join-room", ROOM_ID, name, (message) => {
-    console.log(message)
+    displayInfo(message)
   })
 })
 
 socket.on("receive-message", (data) => {
-  console.log(`${data.name}: ${data.message}`)
+  displayOpponentsMessage(data.message, data.name)
 })
 
 socket.on("user-connected", (name) => {
-  console.log(`${name} connected`)
-  updateActiveUsers()
+  displayInfo(`${name} connected`)
 })
 
 socket.on("user-disconnected", (name) => {
-  console.log(`${name} disconnected`)
-  updateActiveUsers()
+  displayInfo(`${name} disconnected`)
 })
 
 socket.on("active-users", (users) => {
@@ -39,6 +39,45 @@ elements.startBtn.addEventListener("click", () => {
   hideElement(elements.lobbyScreen)
   game = new TurnBasedClickGame()
 })
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault()
+
+  const message = messageInput.value
+
+  if (message === "") return
+  displayYourMessage(message)
+  socket.emit("send-message", message, ROOM_ID)
+
+  messageInput.value = ""
+})
+
+function displayInfo(message) {
+  const div = document.createElement("div")
+  div.classList.add("chat__message-info")
+
+  div.textContent = message
+
+  document.getElementById("chat-messages").append(div)
+}
+
+function displayYourMessage(message) {
+  const div = document.createElement("div")
+  div.classList.add("chat__message")
+
+  div.innerHTML = `<span class='chat__message-you'>You: </span> ${message}`
+
+  document.getElementById("chat-messages").append(div)
+}
+
+function displayOpponentsMessage(message, name) {
+  const div = document.createElement("div")
+  div.classList.add("chat__message")
+
+  div.innerHTML = `<span class='chat__message-opponent'>${name}: </span> ${message}`
+
+  document.getElementById("chat-messages").append(div)
+}
 
 function updateActiveUsers(users) {
   activePlayers.innerHTML = ""

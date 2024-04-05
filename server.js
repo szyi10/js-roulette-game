@@ -10,7 +10,7 @@ app.use(express.static("public"))
 const activeUsersPerRoom = {}
 
 app.get("/:room", (req, res) => {
-  res.render("lobby", { roomId: req.params.room })
+  res.render("site/lobby", { roomId: req.params.room })
 })
 
 io.on("connection", (socket) => {
@@ -39,6 +39,7 @@ io.on("connection", (socket) => {
     activeUsersPerRoom[room].add(username)
     cb(`Joined lobby: ${room}`)
     io.to(room).emit("active-users", Array.from(activeUsersPerRoom[room]))
+    socket.broadcast.to(currentRoom).emit("user-connected", username)
   })
 
   socket.on("new-user", (username) => {
@@ -48,7 +49,6 @@ io.on("connection", (socket) => {
         "active-users",
         Array.from(activeUsersPerRoom[currentRoom])
       )
-      socket.broadcast.to(currentRoom).emit("user-connected", username)
     }
   })
 
@@ -59,6 +59,8 @@ io.on("connection", (socket) => {
         "active-users",
         Array.from(activeUsersPerRoom[currentRoom])
       )
+      const disconnectedUser = socket.username
+      io.to(currentRoom).emit("user-disconnected", disconnectedUser)
     }
   })
 })
