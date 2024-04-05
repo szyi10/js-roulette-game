@@ -32,12 +32,18 @@ socket.on("active-users", (users) => {
   updateActiveUsers(users)
 })
 
+socket.on("start-game", () => {
+  console.log("start")
+  // Hide lobby screen and start game
+  // hideElement(elements.lobbyScreen)
+  // game = new TurnBasedClickGame()
+})
+
 let game
 
 elements.startBtn.addEventListener("click", () => {
-  // Hide lobby screen and start game
-  hideElement(elements.lobbyScreen)
-  game = new TurnBasedClickGame()
+  socket.emit("vote-start", name)
+  displayInfo(`${name} voted for start!`)
 })
 
 form.addEventListener("submit", (e) => {

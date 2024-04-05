@@ -63,6 +63,10 @@ io.on("connection", (socket) => {
       io.to(currentRoom).emit("user-disconnected", disconnectedUser)
     }
   })
+
+  socket.on("vote-start", (player) => {
+    io.to(currentRoom).emit("start-game")
+  })
 })
 
 function getRandomCode() {
