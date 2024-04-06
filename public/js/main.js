@@ -7,7 +7,8 @@ const messageInput = document.getElementById("message")
 const form = document.getElementById("message-form")
 
 const socket = io("/")
-const name = `Player ${Math.floor(Math.random() * 9)}`
+const name = `Player ${getRandomNumbers()}`
+let usersInLobby
 
 socket.on("connect", () => {
   socket.emit("new-user", name)
@@ -33,13 +34,13 @@ socket.on("active-users", (users) => {
 })
 
 socket.on("start-game", () => {
-  console.log("start")
   // Hide lobby screen and start game
-  // hideElement(elements.lobbyScreen)
-  // game = new TurnBasedClickGame()
+  hideElement(elements.lobbyScreen)
+  console.log("hello")
+  game.init()
 })
 
-let game
+let game = new TurnBasedClickGame(socket)
 
 elements.startBtn.addEventListener("click", () => {
   socket.emit("vote-start", name)
@@ -87,6 +88,7 @@ function displayOpponentsMessage(message, name) {
 
 function updateActiveUsers(users) {
   activePlayers.innerHTML = ""
+  usersInLobby = users
 
   users.forEach((user) => {
     const userElement = document.createElement("div")
@@ -106,3 +108,17 @@ function updateActiveUsers(users) {
     activePlayers.appendChild(userElement)
   })
 }
+
+function getRandomNumbers() {
+  const characters = "0123456789"
+  let number = ""
+  for (let i = 0; i < 6; i++) {
+    number += characters.charAt(Math.floor(Math.random() * characters.length))
+  }
+
+  return number
+}
+
+socket.on("game-state", (state) => {
+  game.setState(state)
+})

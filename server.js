@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const server = require("http").Server(app)
 const io = require("socket.io")(server)
+const GameState = require("./GameState")
 
 app.set("view engine", "ejs")
 app.use(express.static("public"))
@@ -9,11 +10,15 @@ app.use(express.static("public"))
 // Store active users of each lobby
 const activeUsersPerRoom = {}
 
+// Map to store GameState instances for each room
+const gameStatesPerRoom = {}
+
 app.get("/:room", (req, res) => {
   res.render("site/lobby", { roomId: req.params.room })
 })
 
 io.on("connection", (socket) => {
+  // Variable to store curret room for each socket
   let currentRoom = ""
 
   socket.on("send-message", (message, room) => {
@@ -32,14 +37,24 @@ io.on("connection", (socket) => {
       return
     }
 
+    // Join the room
     socket.join(room)
     currentRoom = room
     socket.username = username
 
+    // Add user to active users in the room
     activeUsersPerRoom[room].add(username)
     cb(`Joined lobby: ${room}`)
     io.to(room).emit("active-users", Array.from(activeUsersPerRoom[room]))
     socket.broadcast.to(currentRoom).emit("user-connected", username)
+
+    // Initialize game state for the room if it doesn't exist
+    if (!gameStatesPerRoom[room]) {
+      gameStatesPerRoom[room] = new GameState()
+    }
+
+    // Add user to game
+    gameStatesPerRoom[room].addPlayer(username)
   })
 
   socket.on("new-user", (username) => {
@@ -61,12 +76,36 @@ io.on("connection", (socket) => {
       )
       const disconnectedUser = socket.username
       io.to(currentRoom).emit("user-disconnected", disconnectedUser)
+
+      // Remove user from game
+      if (gameStatesPerRoom[currentRoom]) {
+        gameStatesPerRoom[currentRoom].removePlayer(disconnectedUser)
+      }
     }
   })
 
   socket.on("vote-start", (player) => {
     io.to(currentRoom).emit("start-game")
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].gameStarted = true
+    }
   })
+
+  socket.on("handle-click", (data) => {
+    io.to(currentRoom).emit("handle-click", data)
+  })
+
+  socket.on("next-round", () => {
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].nextRound()
+    }
+  })
+
+  setInterval(() => {
+    if (currentRoom && gameStatesPerRoom[currentRoom]) {
+      io.to(currentRoom).emit("game-state", gameStatesPerRoom[currentRoom])
+    }
+  }, 1000 / 20)
 })
 
 function getRandomCode() {

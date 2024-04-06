@@ -8,16 +8,23 @@ import {
 } from "./sounds.js"
 
 export class TurnBasedClickGame {
-  constructor() {
-    this.init()
+  constructor(socket) {
+    this.socket = socket
+    this.state = {}
+
     this.clicks = []
-    this.round = 0
 
     this.handlePlayerClick = this.handlePlayerClick.bind(this)
   }
 
+  setState(state) {
+    this.state = state
+    console.log(this.state)
+  }
+
   // Initialize the game
   init() {
+    console.log(this.state)
     this.setupPlayers()
     this.setupEventListeners()
     this.updateLivesDisplay()
@@ -25,9 +32,14 @@ export class TurnBasedClickGame {
 
   // Setup players with initial values
   setupPlayers() {
-    this.currentPlayer = 1
-    this.player1 = new Player("Player 1", 5)
-    this.player2 = new Player("Player 2", 5)
+    this.currentPlayer = this.state.currentPlayer
+
+    this.player1 = new Player(this.state.playersInLobby[0], 5)
+    this.player2 = new Player(this.state.playersInLobby[1], 5)
+
+    document.getElementById("player1Name").textContent = this.player1.name
+    document.getElementById("player2Name").textContent = this.player2.name
+
     // Distribute items initially
     this.distributeItems()
   }
@@ -45,14 +57,14 @@ export class TurnBasedClickGame {
 
   // Handle rounds logic
   handleRound() {
-    this.round++
+    this.socket.emit("next-round")
     // Distribute items every two rounds
     this.distributeItems()
   }
 
   // Distribute items to players
   distributeItems() {
-    if (this.round % 2 === 0) {
+    if (this.state.round !== 0 && this.state.round % 2 === 0) {
       // Concatenate new items to the existing items arrays
       this.player1.items = this.player1.items.concat(
         this.player1.getRandomItems()
@@ -84,6 +96,8 @@ export class TurnBasedClickGame {
 
   // Handle click event on 'player' buttons
   handlePlayerClick(playerNum) {
+    console.log("Clicked on player")
+
     const player = playerNum === 1 ? this.player1 : this.player2
     const currentClick = this.clicks.shift()
 
@@ -193,7 +207,7 @@ export class TurnBasedClickGame {
     const currentPlayerItems =
       this.currentPlayer === 1 ? this.player1.items : this.player2.items
 
-    if (this.round % 2 !== 0 || this.round > 1) {
+    if (this.state.round % 2 !== 0 || this.state.round > 1) {
       if (currentPlayerItems.length > 8) {
         currentPlayerItems.length = 8
       }
@@ -283,7 +297,7 @@ export class TurnBasedClickGame {
     this.player1.lives = 5
     this.player2.lives = 5
 
-    this.round = 0
+    // this.round = 0
 
     this.clicks = []
 
