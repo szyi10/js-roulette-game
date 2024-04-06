@@ -15,90 +15,92 @@
     </script>
   </head>
   <body>
-    <main class="game">
-      <!-- Player 2 Panel -->
-      <div id="player2Btn" class="panel">
-        <img
-          src="/assets/avatars/blank/Icons_29.png"
-          alt="Player 2 avatar"
-          width="64"
-          height="64"
-          class="panel__img"
-        />
-        <div class="panel__info">
-          <span id="player2Name">Dealer</span>
-          <p id="player2Lives">Lives: 5</p>
-        </div>
-      </div>
-      <!-- Player 2 Items -->
-      <div id="player2Items" class="items"></div>
-
-      <!-- Main Table -->
-      <div class="table">
-        <img
-          id="mainBtn"
-          src="/assets/Shotgun.png"
-          alt="Shotgun"
-          width="186"
-          height="186"
-        />
-        <div class="shells">
-          <div id="shells" class="shells__container"></div>
-          <p id="shell-text" class="shells__text"></p>
-        </div>
-      </div>
-
-      <!-- Player 1 Items -->
-      <div id="player1Items" class="items"></div>
-      <!-- Player 1 Panel -->
-      <div id="player1Btn" class="panel">
-        <img
-          src="/assets/avatars/blank/Icons_03.png"
-          alt="Player 1 avatar"
-          width="64"
-          height="64"
-          class="panel__img"
-        />
-        <div class="panel__info">
-          <span id="player1Name">Player</span>
-          <p id="player1Lives">Lives: 5</p>
-        </div>
-      </div>
-
-      <p id="output" class="output"></p>
-
-      <!-- Screens -->
-      <div id="lobbyScreen" class="screen">
-        <div class="screen__upper">
-          <div class="screen__title">
-            <h1>Buckshot</h1>
-            <h2>Roulette</h2>
+    <div class="container">
+      <main class="game">
+        <!-- Player 2 Panel -->
+        <div id="player2Btn" class="panel">
+          <img
+            src="/assets/avatars/blank/Icons_29.png"
+            alt="Player 2 avatar"
+            width="64"
+            height="64"
+            class="panel__img"
+          />
+          <div class="panel__info">
+            <span id="player2Name">Dealer</span>
+            <p id="player2Lives">Lives: 5</p>
           </div>
-          <div class="lobby" id="lobbyPlayers"></div>
         </div>
-        <div class="screen__bottom">
-          <div class="code">
-            <span>Lobby Code:</span>
-            <div id="lobbyCode"><%= roomId %></div>
-          </div>
-          <button id="startBtn" class="button">Start Game</button>
-        </div>
-      </div>
+        <!-- Player 2 Items -->
+        <div id="player2Items" class="items"></div>
 
-      <div id="endScreen" class="screen">
-        <div class="screen__upper">
-          <div class="screen__title">
-            <h1 id="winner">Player X</h1>
-            <h2>won!</h2>
+        <!-- Main Table -->
+        <div class="table">
+          <img
+            id="mainBtn"
+            src="/assets/Shotgun.png"
+            alt="Shotgun"
+            width="186"
+            height="186"
+          />
+          <div class="shells">
+            <div id="shells" class="shells__container"></div>
+            <p id="shell-text" class="shells__text"></p>
           </div>
-          <button id="restartBtn" class="button">Restart</button>
         </div>
-        <span class="screen__footer"
-          >Developed by <a href="https://github.com/szyi10">szyi.</a></span
-        >
-      </div>
-    </main>
-    <section><%- include ('../partials/chat') %></section>
+
+        <!-- Player 1 Items -->
+        <div id="player1Items" class="items"></div>
+        <!-- Player 1 Panel -->
+        <div id="player1Btn" class="panel">
+          <img
+            src="/assets/avatars/blank/Icons_03.png"
+            alt="Player 1 avatar"
+            width="64"
+            height="64"
+            class="panel__img"
+          />
+          <div class="panel__info">
+            <span id="player1Name">Player</span>
+            <p id="player1Lives">Lives: 5</p>
+          </div>
+        </div>
+
+        <p id="output" class="output"></p>
+
+        <!-- Screens -->
+        <div id="lobbyScreen" class="screen">
+          <div class="screen__upper">
+            <div class="screen__title">
+              <h1>Buckshot</h1>
+              <h2>Roulette</h2>
+            </div>
+            <div class="lobby" id="lobbyPlayers"></div>
+          </div>
+          <div class="screen__bottom">
+            <div class="code">
+              <span>Lobby Code:</span>
+              <div id="lobbyCode"><%= roomId %></div>
+            </div>
+            <button id="startBtn" class="button">Start Game</button>
+          </div>
+        </div>
+
+        <div id="endScreen" class="screen">
+          <div class="screen__upper">
+            <div class="screen__title">
+              <h1 id="winner">Player X</h1>
+              <h2>won!</h2>
+            </div>
+            <button id="restartBtn" class="button">Restart</button>
+          </div>
+          <span class="screen__footer"
+            >Developed by <a href="https://github.com/szyi10">szyi.</a></span
+          >
+        </div>
+      </main>
+      <section><%- include ('../partials/chat') %></section>
+    </div>
     <audio id="regularClickSound" src="/assets/sounds/regular_shot.mp3"></audio>
     <audio id="emptyClickSound" src="/assets/sounds/empty_shot.mp3"></audio>
     <audio id="shellSound" src="/assets/sounds/shell.mp3"></audio>

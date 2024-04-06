@@ -40,6 +40,11 @@ button {
   cursor: pointer;
 }
 
+.container {
+  display: flex;
+  gap: 10px;
+}
+
 .panel {
   position: relative;
   display: flex;
@@ -77,6 +82,10 @@ button {
 }
 .panel__info#player2Btn::before {
   top: -24px;
+}
+
+.game {
+  width: 100%;
 }
 
 .items {
@@ -270,7 +279,6 @@ button {
 }
 
 .chat {
-  position: absolute;
   background: black;
   border: 5px solid #ffbf00;
   color: white;
@@ -281,9 +289,6 @@ button {
   padding: 20px;
   width: 340px;
   height: 340px;
-  top: calc(50% - 100px);
-  left: calc(50% + 380px);
-  transform: translate(-50%, -50%);
 }
 .chat__title {
   width: 100%;

@@ -2,6 +2,11 @@
 @import "mixins";
 
 // Screens, buttons, etc.
+.container {
+  display: flex;
+  gap: 10px;
+}
+
 .panel {
   position: relative;
   display: flex;
@@ -53,6 +58,10 @@
       top: -24px;
     }
   }
+}
+
+.game {
+  width: 100%;
 }
 
 .items {
@@ -278,7 +287,6 @@
 }
 
 .chat {
-  position: absolute;
   background: black;
   border: 5px solid $secondary;
   color: white;
@@ -289,9 +297,10 @@
   padding: 20px;
   width: 340px;
   height: 340px;
-  top: calc(50% - 100px);
-  left: calc(50% + 380px);
-  transform: translate(-50%, -50%);
+  // position: absolute;
+  // top: calc(50% - 100px);
+  // left: calc(50% + 380px);
+  // transform: translate(-50%, -50%);
 
   &__title {
     width: 100%;

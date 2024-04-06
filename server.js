@@ -101,6 +101,30 @@ io.on("connection", (socket) => {
     }
   })
 
+  socket.on("toggle-player", (player) => {
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].togglePlayer(player)
+    }
+  })
+
+  socket.on("add-empty-click", () => {
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].emptyClicks++
+    }
+  })
+
+  socket.on("push-click", (clickType) => {
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].clicks.push(clickType)
+    }
+  })
+
+  socket.on("handle-animation", (playerNum) => {
+    if (currentRoom) {
+      io.to(currentRoom).emit("shotgun-animate", playerNum)
+    }
+  })
+
   setInterval(() => {
     if (currentRoom && gameStatesPerRoom[currentRoom]) {
       io.to(currentRoom).emit("game-state", gameStatesPerRoom[currentRoom])

@@ -1,9 +1,14 @@
 class GameState {
   constructor() {
     this.playersInLobby = []
-    this.currentPlayer = 1
     this.gameStarted = false
+
+    this.currentPlayer = 1
     this.round = 0
+    this.clicks = []
+    this.emptyClicks = 0
+
+    this.shotgunAnimationClass = "none"
   }
 
   getPlayerIndexByName(name) {

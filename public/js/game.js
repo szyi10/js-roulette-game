@@ -12,14 +12,21 @@ export class TurnBasedClickGame {
     this.socket = socket
     this.state = {}
 
-    this.clicks = []
-
     this.handlePlayerClick = this.handlePlayerClick.bind(this)
   }
 
   setState(state) {
     this.state = state
     console.log(this.state)
+
+    elements.player1Btn.classList.toggle(
+      "active",
+      this.state.currentPlayer === 1
+    )
+    elements.player2Btn.classList.toggle(
+      "active",
+      this.state.currentPlayer === 2
+    )
   }
 
   // Initialize the game
@@ -32,8 +39,6 @@ export class TurnBasedClickGame {
 
   // Setup players with initial values
   setupPlayers() {
-    this.currentPlayer = this.state.currentPlayer
-
     this.player1 = new Player(this.state.playersInLobby[0], 5)
     this.player2 = new Player(this.state.playersInLobby[1], 5)
 
@@ -86,7 +91,7 @@ export class TurnBasedClickGame {
 
   // Handle click event on 'main' button
   handleClick() {
-    if (this.clicks.length === 0) {
+    if (this.state.clicks.length === 0) {
       this.reloadClicks()
     }
 
@@ -99,9 +104,10 @@ export class TurnBasedClickGame {
     console.log("Clicked on player")
 
     const player = playerNum === 1 ? this.player1 : this.player2
-    const currentClick = this.clicks.shift()
+    const currentClick = this.state.clicks.shift()
 
-    this.handleAnimation(playerNum)
+    // this.handleAnimation(playerNum)
+    this.socket.emit("handle-animation", playerNum)
 
     setTimeout(() => {
       if (currentClick === "regular") {
@@ -110,7 +116,7 @@ export class TurnBasedClickGame {
         this.togglePlayer()
       } else if (currentClick === "empty") {
         playEmptyClickSound()
-        if (this.currentPlayer !== playerNum) {
+        if (this.state.currentPlayer !== playerNum) {
           this.togglePlayer()
         }
       }
@@ -135,7 +141,6 @@ export class TurnBasedClickGame {
     elements.shellContainer.classList.remove("slide-out")
     elements.shellContainer.classList.add("slide-in")
 
-    this.emptyClicks = 0
     function getRandomInt(min, max) {
       min = Math.ceil(min)
       max = Math.floor(max)
@@ -146,22 +151,24 @@ export class TurnBasedClickGame {
     const randomNumber = getRandomInt(3, 6)
 
     for (let i = 0; i < randomNumber; i++) {
-      const isClickEmpty = Math.random() < 0.5
+      const isClickEmpty = Math.random() < 0
       const clickType = isClickEmpty ? "empty" : "regular"
 
       if (clickType === "empty") {
-        this.emptyClicks++
+        // this.emptyClicks++
+        this.socket.emit("add-empty-click")
       }
 
-      this.clicks.push(clickType)
+      // this.clicks.push(clickType)
+      this.socket.emit("push-click", clickType)
     }
 
+    this.updateShellsDisplay()
     elements.shellText.textContent = `${
-      this.clicks.length - this.emptyClicks
-    } regulars. ${this.emptyClicks} blanks.
+      this.state.clicks.length - this.state.emptyClicks
+    } regulars. ${this.state.emptyClicks} blanks.
     `
     playShellSound(randomNumber)
-    this.updateShellsDisplay()
 
     this.handleRound()
   }
@@ -173,7 +180,10 @@ export class TurnBasedClickGame {
         this.player1.handcuffed = false
       } else {
         this.player1.roundsHandcuffed--
-        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1
+        this.socket.emit(
+          "toggle-player",
+          this.state.currentPlayer === 1 ? 2 : 1
+        )
       }
     }
 
@@ -182,30 +192,33 @@ export class TurnBasedClickGame {
         this.player2.handcuffed = false
       } else {
         this.player2.roundsHandcuffed--
-        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1
+        this.socket.emit(
+          "toggle-player",
+          this.state.currentPlayer === 1 ? 2 : 1
+        )
       }
     }
 
-    this.currentPlayer = this.currentPlayer === 1 ? 2 : 1
+    this.socket.emit("toggle-player", this.state.currentPlayer === 1 ? 2 : 1)
 
     // Enable items for player 1
-    if (this.currentPlayer === 1) {
+    if (this.state.currentPlayer === 1) {
       elements.player1ItemsDisplay.style.pointerEvents = "all"
       elements.player2ItemsDisplay.style.pointerEvents = "none"
     }
     // Enable items for player 2
-    if (this.currentPlayer === 2) {
+    if (this.state.currentPlayer === 2) {
       elements.player1ItemsDisplay.style.pointerEvents = "none"
       elements.player2ItemsDisplay.style.pointerEvents = "all"
     }
 
     const currentPlayerItemsDisplay =
-      this.currentPlayer === 1
+      this.state.currentPlayer === 1
         ? elements.player1ItemsDisplay
         : elements.player2ItemsDisplay
     currentPlayerItemsDisplay.innerHTML = "" // Clear items display
     const currentPlayerItems =
-      this.currentPlayer === 1 ? this.player1.items : this.player2.items
+      this.state.currentPlayer === 1 ? this.player1.items : this.player2.items
 
     if (this.state.round % 2 !== 0 || this.state.round > 1) {
       if (currentPlayerItems.length > 8) {
@@ -236,7 +249,7 @@ export class TurnBasedClickGame {
 
   // Handle item click and apply item effect
   handleItemClick(item) {
-    const player = this.currentPlayer === 1 ? this.player1 : this.player2
+    const player = this.state.currentPlayer === 1 ? this.player1 : this.player2
     applyItemEffect(this, player, item)
 
     const indexToRemove = player.items.indexOf(item)
@@ -271,21 +284,18 @@ export class TurnBasedClickGame {
     if (this.player2.lives <= 0) {
       this.endGame("Player 1")
     }
-
-    elements.player1Btn.classList.toggle("active", this.currentPlayer === 1)
-    elements.player2Btn.classList.toggle("active", this.currentPlayer === 2)
   }
 
   // Update shells display based on current clicks
   updateShellsDisplay() {
-    elements.shells.innerHTML = this.clicks
+    elements.shells.innerHTML = this.state.clicks
       .map((shell) => `<img src="./assets/${shell}-shell.png" class="shell" />`)
       .join("")
 
     setTimeout(() => {
       elements.shellContainer.classList.remove("slide-in")
       elements.shellContainer.classList.add("slide-out")
-    }, this.clicks.length * 500 + 500)
+    }, this.state.clicks.length * 500 + 500)
   }
 
   endGame(winner) {

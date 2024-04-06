@@ -40,6 +40,10 @@ socket.on("start-game", () => {
   game.init()
 })
 
+socket.on("shotgun-animate", (playerNum) => {
+  game.handleAnimation(playerNum)
+})
+
 let game = new TurnBasedClickGame(socket)
 
 elements.startBtn.addEventListener("click", () => {
