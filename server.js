@@ -125,6 +125,18 @@ io.on("connection", (socket) => {
     }
   })
 
+  socket.on("create-players", (player1, player2) => {
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].createPlayers(player1, player2)
+    }
+  })
+
+  socket.on("lose-life", (player) => {
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].loseLife(player)
+    }
+  })
+
   setInterval(() => {
     if (currentRoom && gameStatesPerRoom[currentRoom]) {
       io.to(currentRoom).emit("game-state", gameStatesPerRoom[currentRoom])

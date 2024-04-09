@@ -27,6 +27,10 @@ export class TurnBasedClickGame {
       "active",
       this.state.currentPlayer === 2
     )
+
+    if (this.state.player1) {
+      this.updateLivesDisplay()
+    }
   }
 
   // Initialize the game
@@ -34,7 +38,6 @@ export class TurnBasedClickGame {
     console.log(this.state)
     this.setupPlayers()
     this.setupEventListeners()
-    this.updateLivesDisplay()
   }
 
   // Setup players with initial values
@@ -42,8 +45,16 @@ export class TurnBasedClickGame {
     this.player1 = new Player(this.state.playersInLobby[0], 5)
     this.player2 = new Player(this.state.playersInLobby[1], 5)
 
-    document.getElementById("player1Name").textContent = this.player1.name
-    document.getElementById("player2Name").textContent = this.player2.name
+    document.getElementById("player1Name").textContent =
+      this.state.playersInLobby[0]
+    document.getElementById("player2Name").textContent =
+      this.state.playersInLobby[1]
+
+    this.socket.emit(
+      "create-players",
+      this.state.playersInLobby[0],
+      this.state.playersInLobby[1]
+    )
 
     // Distribute items initially
     this.distributeItems()
@@ -103,7 +114,7 @@ export class TurnBasedClickGame {
   handlePlayerClick(playerNum) {
     console.log("Clicked on player")
 
-    const player = playerNum === 1 ? this.player1 : this.player2
+    const player = playerNum === 1 ? this.state.player1 : this.state.player2
     const currentClick = this.state.clicks.shift()
 
     // this.handleAnimation(playerNum)
@@ -112,7 +123,9 @@ export class TurnBasedClickGame {
     setTimeout(() => {
       if (currentClick === "regular") {
         playRegularClickSound()
-        player.loseLife()
+
+        this.socket.emit("lose-life", playerNum)
+
         this.togglePlayer()
       } else if (currentClick === "empty") {
         playEmptyClickSound()
@@ -274,14 +287,14 @@ export class TurnBasedClickGame {
 
   // Update lives display for both players
   updateLivesDisplay() {
-    elements.player1LivesDisplay.textContent = `Lives: ${this.player1.lives}`
-    elements.player2LivesDisplay.textContent = `Lives: ${this.player2.lives}`
+    elements.player1LivesDisplay.textContent = `Lives: ${this.state.player1.lives}`
+    elements.player2LivesDisplay.textContent = `Lives: ${this.state.player2.lives}`
 
-    if (this.player1.lives <= 0) {
+    if (this.state.player1.lives <= 0) {
       this.endGame("Player 2")
     }
 
-    if (this.player2.lives <= 0) {
+    if (this.state.player2.lives <= 0) {
       this.endGame("Player 1")
     }
   }
