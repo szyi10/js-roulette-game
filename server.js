@@ -142,6 +142,12 @@ io.on("connection", (socket) => {
     }
   })
 
+  socket.on("current-socket", (data) => {
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].changeSocket(data)
+    }
+  })
+
   setInterval(() => {
     if (currentRoom && gameStatesPerRoom[currentRoom]) {
       io.to(currentRoom).emit("game-state", gameStatesPerRoom[currentRoom])

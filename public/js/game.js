@@ -8,16 +8,17 @@ import {
 } from "./sounds.js"
 
 export class TurnBasedClickGame {
-  constructor(socket) {
+  constructor(socket, me) {
     this.socket = socket
     this.state = {}
+    this.me = me
 
     this.handlePlayerClick = this.handlePlayerClick.bind(this)
   }
 
   setState(state) {
     this.state = state
-    console.log(this.state)
+    // console.log(this.state)
 
     elements.player1Btn.classList.toggle(
       "active",
@@ -31,6 +32,12 @@ export class TurnBasedClickGame {
     if (this.state.player1) {
       this.updateLivesDisplay()
     }
+
+    if (this.state.currentSocket !== this.me.username) {
+      elements.mainBtn.style.pointerEvents = "none"
+    } else {
+      elements.mainBtn.style.pointerEvents = "all"
+    }
   }
 
   // Initialize the game
@@ -38,6 +45,8 @@ export class TurnBasedClickGame {
     console.log(this.state)
     this.setupPlayers()
     this.setupEventListeners()
+
+    this.socket.emit("current-socket", this.state.playersInLobby[0])
   }
 
   // Setup players with initial values
@@ -189,10 +198,18 @@ export class TurnBasedClickGame {
           "toggle-player",
           this.state.currentPlayer === 1 ? 2 : 1
         )
+        this.socket.emit(
+          "current-socket",
+          this.state.playersInLobby[this.state.currentPlayer === 1 ? 1 : 0]
+        )
       }
     }
 
     this.socket.emit("toggle-player", this.state.currentPlayer === 1 ? 2 : 1)
+    this.socket.emit(
+      "current-socket",
+      this.state.playersInLobby[this.state.currentPlayer === 1 ? 1 : 0]
+    )
 
     // Enable items for player 1
     if (this.state.currentPlayer === 1) {

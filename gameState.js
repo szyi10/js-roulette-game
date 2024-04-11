@@ -48,6 +48,7 @@ class GameState {
 
     this.currentPlayer = 1
     this.round = 0
+    this.currentSocket = null
 
     this.clicks = []
     this.emptyClicks = 0
@@ -115,6 +116,10 @@ class GameState {
 
   nextRound() {
     this.round++
+  }
+
+  changeSocket(data) {
+    this.currentSocket = data
   }
 }
 

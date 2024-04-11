@@ -7,8 +7,15 @@ const messageInput = document.getElementById("message")
 const form = document.getElementById("message-form")
 
 const socket = io("/")
-const name = `Player ${getRandomNumbers()}`
-let usersInLobby
+
+let name = localStorage.getItem("username")
+if (!name) {
+  localStorage.setItem("username", `Player ${getRandomNumbers()}`)
+  name = localStorage.getItem("username")
+}
+let me = {
+  username: name,
+}
 
 socket.on("connect", () => {
   socket.emit("new-user", name)
@@ -48,7 +55,11 @@ socket.on("clicks-reloaded", (data) => {
   game.handleReloadAnimation(data)
 })
 
-let game = new TurnBasedClickGame(socket)
+let game = new TurnBasedClickGame(socket, me)
+
+// elements.mainBtn.addEventListener('click', () => {
+
+// })
 
 elements.startBtn.addEventListener("click", () => {
   socket.emit("vote-start", name)
@@ -96,7 +107,6 @@ function displayOpponentsMessage(message, name) {
 
 function updateActiveUsers(users) {
   activePlayers.innerHTML = ""
-  usersInLobby = users
 
   users.forEach((user) => {
     const userElement = document.createElement("div")
@@ -120,7 +130,7 @@ function updateActiveUsers(users) {
 function getRandomNumbers() {
   const characters = "0123456789"
   let number = ""
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 2; i++) {
     number += characters.charAt(Math.floor(Math.random() * characters.length))
   }
 
