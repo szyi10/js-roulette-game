@@ -112,9 +112,8 @@ export class TurnBasedClickGame {
 
   // Handle click event on 'player' buttons
   handlePlayerClick(playerNum) {
-    console.log("Clicked on player")
-
     const player = playerNum === 1 ? this.state.player1 : this.state.player2
+    this.socket.emit("click-shift")
     const currentClick = this.state.clicks.shift()
 
     // this.handleAnimation(playerNum)
@@ -149,40 +148,21 @@ export class TurnBasedClickGame {
     }, 750)
   }
 
-  // Reload clicks and generate new shells
-  reloadClicks() {
+  handleReloadAnimation(data) {
+    console.log(data)
     elements.shellContainer.classList.remove("slide-out")
     elements.shellContainer.classList.add("slide-in")
 
-    function getRandomInt(min, max) {
-      min = Math.ceil(min)
-      max = Math.floor(max)
-      return Math.floor(Math.random() * (max - min + 1)) + min
-    }
-
-    // Generate a random number between 3 and 6
-    const randomNumber = getRandomInt(3, 6)
-
-    for (let i = 0; i < randomNumber; i++) {
-      const isClickEmpty = Math.random() < 0
-      const clickType = isClickEmpty ? "empty" : "regular"
-
-      if (clickType === "empty") {
-        // this.emptyClicks++
-        this.socket.emit("add-empty-click")
-      }
-
-      // this.clicks.push(clickType)
-      this.socket.emit("push-click", clickType)
-    }
-
-    this.updateShellsDisplay()
+    this.updateShellsDisplay(data)
     elements.shellText.textContent = `${
-      this.state.clicks.length - this.state.emptyClicks
-    } regulars. ${this.state.emptyClicks} blanks.
+      data.clicks.length - data.emptyClicks
+    } regulars. ${data.emptyClicks} blanks.
     `
-    playShellSound(randomNumber)
+  }
 
+  // Reload clicks and generate new shells
+  reloadClicks() {
+    this.socket.emit("reload-clicks")
     this.handleRound()
   }
 
@@ -300,15 +280,15 @@ export class TurnBasedClickGame {
   }
 
   // Update shells display based on current clicks
-  updateShellsDisplay() {
-    elements.shells.innerHTML = this.state.clicks
+  updateShellsDisplay(data) {
+    elements.shells.innerHTML = data.clicks
       .map((shell) => `<img src="./assets/${shell}-shell.png" class="shell" />`)
       .join("")
 
     setTimeout(() => {
       elements.shellContainer.classList.remove("slide-in")
       elements.shellContainer.classList.add("slide-out")
-    }, this.state.clicks.length * 500 + 500)
+    }, data.clicks.length * 500 + 500)
   }
 
   endGame(winner) {

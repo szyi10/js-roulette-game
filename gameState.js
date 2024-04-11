@@ -48,8 +48,10 @@ class GameState {
 
     this.currentPlayer = 1
     this.round = 0
+
     this.clicks = []
     this.emptyClicks = 0
+    this.reloadFinished = false
 
     this.shotgunAnimationClass = "none"
   }
@@ -81,6 +83,34 @@ class GameState {
   loseLife(player) {
     if (player === 1) this.player1.loseLife()
     if (player === 2) this.player2.loseLife()
+  }
+
+  reloadClicks() {
+    this.reloadFinished = false
+    this.clicks = []
+    this.emptyClicks = 0
+
+    function getRandomInt(min, max) {
+      min = Math.ceil(min)
+      max = Math.floor(max)
+      return Math.floor(Math.random() * (max - min + 1)) + min
+    }
+
+    // Generate random number between 3 and 6
+    const randomNumber = getRandomInt(3, 6)
+
+    for (let i = 0; i < randomNumber; i++) {
+      const isClickEmpty = Math.random() < 0.5
+      const clickType = isClickEmpty ? "empty" : "regular"
+
+      if (clickType === "empty") {
+        this.emptyClicks++
+      }
+
+      this.clicks.push(clickType)
+    }
+
+    this.reloadFinished = true
   }
 
   nextRound() {

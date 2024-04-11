@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 const server = require("http").Server(app)
 const io = require("socket.io")(server)
-const GameState = require("./GameState")
+const GameState = require("./gameState")
 
 app.set("view engine", "ejs")
 app.use(express.static("public"))
@@ -107,15 +107,20 @@ io.on("connection", (socket) => {
     }
   })
 
-  socket.on("add-empty-click", () => {
+  socket.on("reload-clicks", () => {
     if (gameStatesPerRoom[currentRoom]) {
-      gameStatesPerRoom[currentRoom].emptyClicks++
+      gameStatesPerRoom[currentRoom].reloadClicks()
+      io.to(currentRoom).emit("clicks-reloaded", {
+        finished: gameStatesPerRoom[currentRoom].reloadFinished,
+        clicks: gameStatesPerRoom[currentRoom].clicks,
+        emptyClicks: gameStatesPerRoom[currentRoom].emptyClicks,
+      })
     }
   })
 
-  socket.on("push-click", (clickType) => {
+  socket.on("click-shift", () => {
     if (gameStatesPerRoom[currentRoom]) {
-      gameStatesPerRoom[currentRoom].clicks.push(clickType)
+      gameStatesPerRoom[currentRoom].clicks.shift()
     }
   })
 

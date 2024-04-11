@@ -44,6 +44,10 @@ socket.on("shotgun-animate", (playerNum) => {
   game.handleAnimation(playerNum)
 })
 
+socket.on("clicks-reloaded", (data) => {
+  game.handleReloadAnimation(data)
+})
+
 let game = new TurnBasedClickGame(socket)
 
 elements.startBtn.addEventListener("click", () => {
