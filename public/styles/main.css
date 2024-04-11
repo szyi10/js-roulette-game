@@ -40,6 +40,12 @@ button {
   cursor: pointer;
 }
 
+input {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: inherit;
+}
+
 .container {
   display: flex;
   gap: 10px;
@@ -146,6 +152,16 @@ button {
   font-weight: 700;
   color: #ffbf00;
 }
+.screen__bottom #join-status {
+  margin: 0 auto;
+  margin-bottom: 5px;
+}
+.screen__bottom #join-status.success {
+  color: green;
+}
+.screen__bottom #join-status.fail {
+  color: red;
+}
 .screen__title {
   display: flex;
   flex-direction: column;
@@ -169,6 +185,9 @@ button {
   color: red;
 }
 .screen#endScreen {
+  display: none;
+}
+.screen#joinScreen {
   display: none;
 }
 
@@ -276,6 +295,31 @@ button {
 }
 .button:hover {
   background: red;
+}
+
+.input {
+  background: black;
+  color: white;
+  border: 5px solid #ffbf00;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.input:focus {
+  outline: none;
+  border-color: red;
+}
+.input:hover {
+  border-color: red;
+}
+.input::-moz-placeholder {
+  font-weight: 500;
+  text-transform: initial;
+}
+.input::placeholder {
+  font-weight: 500;
+  text-transform: initial;
 }
 
 .chat {

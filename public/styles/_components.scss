@@ -127,6 +127,19 @@
         color: $secondary;
       }
     }
+
+    #join-status {
+      margin: 0 auto;
+      margin-bottom: 5px;
+
+      &.success {
+        color: green;
+      }
+
+      &.fail {
+        color: $primary;
+      }
+    }
   }
 
   &__title {
@@ -159,6 +172,10 @@
   }
 
   &#endScreen {
+    display: none;
+  }
+
+  &#joinScreen {
     display: none;
   }
 }
@@ -283,6 +300,30 @@
 
   &:hover {
     background: $primary;
+  }
+}
+
+.input {
+  background: black;
+  color: white;
+  border: 5px solid $secondary;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+  }
+
+  &:hover {
+    border-color: $primary;
+  }
+
+  &::placeholder {
+    font-weight: 500;
+    text-transform: initial;
   }
 }
 

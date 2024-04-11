@@ -7,11 +7,13 @@ export const mainBtn = document.getElementById("mainBtn")
 export const startBtn = document.getElementById("startBtn")
 export const createBtn = document.getElementById("createBtn")
 export const restartBtn = document.getElementById("restartBtn")
+export const joinBtn = document.getElementById("joinBtn")
 
 // SCREENS
 export const startScreen = document.getElementById("startScreen")
 export const lobbyScreen = document.getElementById("lobbyScreen")
 export const endScreen = document.getElementById("endScreen")
+export const joinScreen = document.getElementById("joinScreen")
 
 // PLAYER 1
 export const player1Btn = document.getElementById("player1Btn")

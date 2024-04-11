@@ -29,6 +29,29 @@
           >Developed by <a href="https://github.com/szyi10">szyi.</a></span
         >
       </div>
+
+      <div id="joinScreen" class="screen">
+        <div class="screen__upper">
+          <div class="screen__title">
+            <h1>Buckshot</h1>
+            <h2>Roulette</h2>
+          </div>
+          <div class="lobby" id="lobbyPlayers"></div>
+        </div>
+        <div class="screen__bottom">
+          <span id="join-status" class="success">Lobby is full!</span>
+          <form id="form">
+            <input
+              id="code-input"
+              type="text"
+              placeholder="Enter lobby code"
+              class="input"
+              maxlength="6"
+            />
+            <button class="button">Join</button>
+          </form>
+        </div>
+      </div>
     </main>
     <script>
       document.getElementById("createBtn").addEventListener("click", () => {
@@ -41,6 +64,24 @@
         }
 
         location.assign(`/${code}`)
+      })
+
+      document.getElementById("joinBtn").addEventListener("click", () => {
+        document.getElementById("joinScreen").style.display = "block"
+      })
+
+      document.getElementById("form").addEventListener("submit", (e) => {
+        e.preventDefault()
+
+        const value = document.getElementById("code-input").value
+
+        if (!value) return
+
+        if (value.length < 6) {
+          return console.log("Enter valid code")
+        }
+
+        location.assign(`/${value}`)
       })
     </script>
   </body>
