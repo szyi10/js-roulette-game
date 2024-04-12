@@ -101,9 +101,9 @@ io.on("connection", (socket) => {
     }
   })
 
-  socket.on("toggle-player", (player) => {
+  socket.on("toggle-player", () => {
     if (gameStatesPerRoom[currentRoom]) {
-      gameStatesPerRoom[currentRoom].togglePlayer(player)
+      gameStatesPerRoom[currentRoom].togglePlayer()
     }
   })
 
@@ -139,6 +139,30 @@ io.on("connection", (socket) => {
   socket.on("lose-life", (player) => {
     if (gameStatesPerRoom[currentRoom]) {
       gameStatesPerRoom[currentRoom].loseLife(player)
+    }
+  })
+
+  socket.on("distribute-items", () => {
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].distributeItems()
+      io.to(currentRoom).emit("items-distributed", {
+        player1: gameStatesPerRoom[currentRoom].player1.items,
+        player2: gameStatesPerRoom[currentRoom].player2.items,
+      })
+    }
+  })
+
+  socket.on("item-use", (item) => {
+    if (gameStatesPerRoom[currentRoom]) {
+      gameStatesPerRoom[currentRoom].handleItemUse(item)
+      io.to(currentRoom).emit(
+        "item-used",
+        gameStatesPerRoom[currentRoom].itemMessage,
+        {
+          player1: gameStatesPerRoom[currentRoom].player1.items,
+          player2: gameStatesPerRoom[currentRoom].player2.items,
+        }
+      )
     }
   })
 

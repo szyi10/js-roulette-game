@@ -18,7 +18,6 @@ export class TurnBasedClickGame {
 
   setState(state) {
     this.state = state
-    // console.log(this.state)
 
     elements.player1Btn.classList.toggle(
       "active",
@@ -38,11 +37,21 @@ export class TurnBasedClickGame {
     } else {
       elements.mainBtn.style.pointerEvents = "all"
     }
+
+    // Enable items for player 1
+    if (this.state.currentPlayer === 1) {
+      elements.player1ItemsDisplay.style.pointerEvents = "all"
+      elements.player2ItemsDisplay.style.pointerEvents = "none"
+    }
+    // Enable items for player 2
+    if (this.state.currentPlayer === 2) {
+      elements.player1ItemsDisplay.style.pointerEvents = "none"
+      elements.player2ItemsDisplay.style.pointerEvents = "all"
+    }
   }
 
   // Initialize the game
   init() {
-    console.log(this.state)
     this.setupPlayers()
     this.setupEventListeners()
 
@@ -64,9 +73,6 @@ export class TurnBasedClickGame {
       this.state.playersInLobby[0],
       this.state.playersInLobby[1]
     )
-
-    // Distribute items initially
-    this.distributeItems()
   }
 
   // Setup event listeners for buttons
@@ -84,29 +90,7 @@ export class TurnBasedClickGame {
   handleRound() {
     this.socket.emit("next-round")
     // Distribute items every two rounds
-    this.distributeItems()
-  }
-
-  // Distribute items to players
-  distributeItems() {
-    if (this.state.round !== 0 && this.state.round % 2 === 0) {
-      // Concatenate new items to the existing items arrays
-      this.player1.items = this.player1.items.concat(
-        this.player1.getRandomItems()
-      )
-      this.player2.items = this.player2.items.concat(
-        this.player2.getRandomItems()
-      )
-
-      // Limit the maximum number of items to 8
-      if (this.player1.items.length > 8) {
-        this.player1.items.length = 8
-      }
-      if (this.player2.items.length > 8) {
-        this.player2.items.length = 8
-      }
-    }
-    this.updateItemsDisplay()
+    this.socket.emit("distribute-items")
   }
 
   // Handle click event on 'main' button
@@ -158,7 +142,6 @@ export class TurnBasedClickGame {
   }
 
   handleReloadAnimation(data) {
-    console.log(data)
     elements.shellContainer.classList.remove("slide-out")
     elements.shellContainer.classList.add("slide-in")
 
@@ -177,68 +160,7 @@ export class TurnBasedClickGame {
 
   // Toggle player turn and update items display
   togglePlayer() {
-    if (this.player1.handcuffed) {
-      if (this.player1.roundsHandcuffed === 0) {
-        this.player1.handcuffed = false
-      } else {
-        this.player1.roundsHandcuffed--
-        this.socket.emit(
-          "toggle-player",
-          this.state.currentPlayer === 1 ? 2 : 1
-        )
-      }
-    }
-
-    if (this.player2.handcuffed) {
-      if (this.player2.roundsHandcuffed === 0) {
-        this.player2.handcuffed = false
-      } else {
-        this.player2.roundsHandcuffed--
-        this.socket.emit(
-          "toggle-player",
-          this.state.currentPlayer === 1 ? 2 : 1
-        )
-        this.socket.emit(
-          "current-socket",
-          this.state.playersInLobby[this.state.currentPlayer === 1 ? 1 : 0]
-        )
-      }
-    }
-
-    this.socket.emit("toggle-player", this.state.currentPlayer === 1 ? 2 : 1)
-    this.socket.emit(
-      "current-socket",
-      this.state.playersInLobby[this.state.currentPlayer === 1 ? 1 : 0]
-    )
-
-    // Enable items for player 1
-    if (this.state.currentPlayer === 1) {
-      elements.player1ItemsDisplay.style.pointerEvents = "all"
-      elements.player2ItemsDisplay.style.pointerEvents = "none"
-    }
-    // Enable items for player 2
-    if (this.state.currentPlayer === 2) {
-      elements.player1ItemsDisplay.style.pointerEvents = "none"
-      elements.player2ItemsDisplay.style.pointerEvents = "all"
-    }
-
-    const currentPlayerItemsDisplay =
-      this.state.currentPlayer === 1
-        ? elements.player1ItemsDisplay
-        : elements.player2ItemsDisplay
-    currentPlayerItemsDisplay.innerHTML = "" // Clear items display
-    const currentPlayerItems =
-      this.state.currentPlayer === 1 ? this.player1.items : this.player2.items
-
-    if (this.state.round % 2 !== 0 || this.state.round > 1) {
-      if (currentPlayerItems.length > 8) {
-        currentPlayerItems.length = 8
-      }
-
-      currentPlayerItems.forEach((item) => this.addItemButton(item))
-    }
-
-    this.updateItemsDisplay()
+    this.socket.emit("toggle-player")
   }
 
   // Add item button to the player's item display
@@ -259,27 +181,19 @@ export class TurnBasedClickGame {
 
   // Handle item click and apply item effect
   handleItemClick(item) {
-    const player = this.state.currentPlayer === 1 ? this.player1 : this.player2
-    applyItemEffect(this, player, item)
-
-    const indexToRemove = player.items.indexOf(item)
-    if (indexToRemove !== -1) {
-      player.items.splice(indexToRemove, 1)
-    }
-
-    this.updateItemsDisplay()
+    this.socket.emit("item-use", item)
   }
 
   // Update items display for both players
-  updateItemsDisplay() {
+  updateItemsDisplay(player1, player2) {
     elements.player1ItemsDisplay.innerHTML = ""
     elements.player2ItemsDisplay.innerHTML = ""
 
     // Add items for player 1
-    this.player1.items.forEach((item) => this.addItemButton(item, 1))
+    player1.forEach((item) => this.addItemButton(item, 1))
 
     // Add items for player 2
-    this.player2.items.forEach((item) => this.addItemButton(item, 2))
+    player2.forEach((item) => this.addItemButton(item, 2))
   }
 
   // Update lives display for both players

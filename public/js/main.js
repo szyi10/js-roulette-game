@@ -43,7 +43,6 @@ socket.on("active-users", (users) => {
 socket.on("start-game", () => {
   // Hide lobby screen and start game
   hideElement(elements.lobbyScreen)
-  console.log("hello")
   game.init()
 })
 
@@ -53,6 +52,15 @@ socket.on("shotgun-animate", (playerNum) => {
 
 socket.on("clicks-reloaded", (data) => {
   game.handleReloadAnimation(data)
+})
+
+socket.on("items-distributed", (data) => {
+  game.updateItemsDisplay(data.player1, data.player2)
+})
+
+socket.on("item-used", (itemMessage, data) => {
+  displayInfo(itemMessage)
+  game.updateItemsDisplay(data.player1, data.player2)
 })
 
 let game = new TurnBasedClickGame(socket, me)
