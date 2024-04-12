@@ -288,11 +288,11 @@ export class TurnBasedClickGame {
     elements.player2LivesDisplay.textContent = `Lives: ${this.state.player2.lives}`
 
     if (this.state.player1.lives <= 0) {
-      this.endGame("Player 2")
+      this.endGame(this.state.player2.name)
     }
 
     if (this.state.player2.lives <= 0) {
-      this.endGame("Player 1")
+      this.endGame(this.state.player1.name)
     }
   }
 
