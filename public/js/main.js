@@ -6,7 +6,7 @@ const activePlayers = document.getElementById("lobbyPlayers")
 const messageInput = document.getElementById("message")
 const form = document.getElementById("message-form")
 
-const socket = io("/")
+const socket = io()
 
 let name = localStorage.getItem("username")
 if (!name) {

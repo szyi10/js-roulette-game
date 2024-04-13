@@ -1,5 +1,7 @@
 const express = require("express")
 const app = express()
+
+const PORT = process.env.PORT || 5500
 const server = require("http").Server(app)
 const io = require("socket.io")(server)
 const GameState = require("./gameState")
@@ -189,7 +191,6 @@ function getRandomCode() {
   return code
 }
 
-server.listen(3000, () => {
-  console.log("Server listening on port 3000")
-  console.log("http://localhost:3000")
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`)
 })
