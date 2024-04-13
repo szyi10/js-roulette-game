@@ -1,4 +1,4 @@
-# ![Logo](/public/assets/avatars/full/Icons_29.png) Buckshot Roulette
+# ![Logo](/public/assets/avatars/full/Icons_29.png) JS Roulette Game
 
 <!-- ## Demo link:
 
