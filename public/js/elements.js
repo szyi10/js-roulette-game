@@ -2,16 +2,26 @@
 export const output = document.getElementById("output")
 export const winnerOutput = document.getElementById("winner")
 
+// FORMS
+export const joinForm = document.getElementById("join-form")
+
+// INPUTS
+export const joinCodeInput = document.getElementById("code-input")
+
 // BUTTONS
 export const mainBtn = document.getElementById("mainBtn")
 export const startBtn = document.getElementById("startBtn")
 export const createBtn = document.getElementById("createBtn")
 export const restartBtn = document.getElementById("restartBtn")
+export const joinBtn = document.getElementById("joinBtn")
+export const leaveBtn = document.getElementById("leaveBtn")
+export const backBtn = document.getElementById("backBtn")
 
 // SCREENS
 export const startScreen = document.getElementById("startScreen")
 export const lobbyScreen = document.getElementById("lobbyScreen")
 export const endScreen = document.getElementById("endScreen")
+export const joinScreen = document.getElementById("joinScreen")
 
 // PLAYER 1
 export const player1Btn = document.getElementById("player1Btn")
@@ -28,6 +38,7 @@ export const shells = document.getElementById("shells")
 export const shellText = document.getElementById("shell-text")
 export const shellContainer = document.querySelector(".shells")
 
+// HELPER FUNCTIONS
 export function hideElement(element) {
   element.style.display = "none"
 }

@@ -65,10 +65,6 @@ socket.on("item-used", (itemMessage, data) => {
 
 let game = new TurnBasedClickGame(socket, me)
 
-// elements.mainBtn.addEventListener('click', () => {
-
-// })
-
 elements.startBtn.addEventListener("click", () => {
   socket.emit("vote-start", name)
   displayInfo(`${name} voted for start!`)
