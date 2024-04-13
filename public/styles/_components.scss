@@ -2,6 +2,11 @@
 @import "mixins";
 
 // Screens, buttons, etc.
+.container {
+  display: flex;
+  gap: 10px;
+}
+
 .panel {
   position: relative;
   display: flex;
@@ -53,6 +58,10 @@
       top: -24px;
     }
   }
+}
+
+.game {
+  width: 100%;
 }
 
 .items {
@@ -149,7 +158,6 @@
     }
   }
 
-  &#lobbyScreen,
   &#endScreen {
     display: none;
   }
@@ -275,5 +283,100 @@
 
   &:hover {
     background: $primary;
+  }
+}
+
+.chat {
+  background: black;
+  border: 5px solid $secondary;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  width: 340px;
+  height: 340px;
+  // position: absolute;
+  // top: calc(50% - 100px);
+  // left: calc(50% + 380px);
+  // transform: translate(-50%, -50%);
+
+  &__title {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  &__messages {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    & {
+      scrollbar-width: auto;
+      scrollbar-color: $secondary black;
+    }
+
+    &::-webkit-scrollbar {
+      width: 16px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: black;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #eeff00;
+      border-radius: 10px;
+      border: 3px solid #ffffff;
+    }
+  }
+
+  &__message {
+    &-you {
+      font-weight: 600;
+      color: $primary;
+    }
+
+    &-opponent {
+      font-weight: 600;
+      color: $secondary;
+    }
+
+    &-info {
+      font-weight: 600;
+      color: green;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    margin-top: 10px;
+
+    input {
+      flex: 1;
+      background: black;
+      border: 3px solid $secondary;
+      font-weight: 500;
+      padding: 6px 12px;
+      height: 100%;
+      color: white;
+      font-family: inherit;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+      }
+
+      &:hover {
+        border-color: $primary;
+      }
+    }
   }
 }

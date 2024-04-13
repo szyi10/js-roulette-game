@@ -1,8 +1,8 @@
-# ![Logo](/assets/avatars/full/Icons_29.png) JS Roulette Game
+# ![Logo](/public/assets/avatars/full/Icons_29.png) JS Roulette Game
 
-## Demo link:
+<!-- ## Demo link:
 
-Access game at https://buckshot-roulette-alpha.vercel.app/
+Access game at https://buckshot-roulette-alpha.vercel.app/ -->
 
 ## Table of Content:
 
@@ -16,7 +16,7 @@ Buckshot roulette is simple JavaScript based game, where players take turns to a
 
 ## Technologies
 
-The game is built using `HTML`, `SASS` and `JavaScript`.
+The game is built using `EJS`, `SASS`, `JavaScript` and `Node.js`.
 
 ## Status
 

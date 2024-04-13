@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buckshot Roulette</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link
+      rel="shortcut icon"
+      href="/assets/avatars/full/Icons_29.png"
+      type="image/png"
+    />
+  </head>
+  <body>
+    <main class="game" style="width: 400px; height: 560px">
+      <!-- Screens -->
+      <div id="startScreen" class="screen">
+        <div class="screen__upper">
+          <div class="screen__title">
+            <h1>Buckshot</h1>
+            <h2>Roulette</h2>
+          </div>
+          <div class="screen__buttons">
+            <button id="createBtn" class="button">Create Lobby</button>
+            <button id="joinBtn" class="button">Join Lobby</button>
+          </div>
+        </div>
+        <span class="screen__footer"
+          >Developed by <a href="https://github.com/szyi10">szyi.</a></span
+        >
+      </div>
+    </main>
+    <script>
+      document.getElementById("createBtn").addEventListener("click", () => {
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let code = ""
+        for (let i = 0; i < 6; i++) {
+          code += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+          )
+        }
+
+        location.assign(`/${code}`)
+      })
+    </script>
+  </body>
+</html>

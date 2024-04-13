@@ -1,0 +1,17 @@
+{
+  "name": "buckshot",
+  "version": "1.0.0",
+  "description": "Access game at https://buckshot-roulette-alpha.vercel.app/",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}
