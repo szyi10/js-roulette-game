@@ -4,7 +4,7 @@
   "description": "Access game at https://buckshot-roulette-alpha.vercel.app/",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
