@@ -39,8 +39,8 @@
           <div class="lobby" id="lobbyPlayers"></div>
         </div>
         <div class="screen__bottom">
-          <span id="join-status" class="success">Lobby is full!</span>
-          <form id="form">
+          <!-- <span id="join-status" class="success">Lobby is full!</span> -->
+          <form id="join-form">
             <input
               id="code-input"
               type="text"
@@ -50,39 +50,10 @@
             />
             <button class="button">Join</button>
           </form>
+          <button class="button" id="backBtn">Back</button>
         </div>
       </div>
     </main>
-    <script>
-      document.getElementById("createBtn").addEventListener("click", () => {
-        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        let code = ""
-        for (let i = 0; i < 6; i++) {
-          code += characters.charAt(
-            Math.floor(Math.random() * characters.length)
-          )
-        }
-
-        location.assign(`/${code}`)
-      })
-
-      document.getElementById("joinBtn").addEventListener("click", () => {
-        document.getElementById("joinScreen").style.display = "block"
-      })
-
-      document.getElementById("form").addEventListener("submit", (e) => {
-        e.preventDefault()
-
-        const value = document.getElementById("code-input").value
-
-        if (!value) return
-
-        if (value.length < 6) {
-          return console.log("Enter valid code")
-        }
-
-        location.assign(`/${value}`)
-      })
-    </script>
+    <script type="module" src="/js/uiEvents.js"></script>
   </body>
 </html>

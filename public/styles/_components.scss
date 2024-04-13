@@ -420,4 +420,27 @@
       }
     }
   }
+
+  &-controls {
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+
+    button:disabled {
+      position: relative;
+      color: inherit;
+      background: gray;
+      cursor: not-allowed;
+
+      &::before {
+        content: "Soon available";
+        position: absolute;
+        bottom: -17.5px;
+        font-size: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: gray;
+      }
+    }
+  }
 }

@@ -396,4 +396,24 @@ input {
 }
 .chat__controls input:hover {
   border-color: red;
+}
+.chat-controls {
+  margin-top: 5px;
+  display: flex;
+  gap: 5px;
+}
+.chat-controls button:disabled {
+  position: relative;
+  color: inherit;
+  background: gray;
+  cursor: not-allowed;
+}
+.chat-controls button:disabled::before {
+  content: "Soon available";
+  position: absolute;
+  bottom: -17.5px;
+  font-size: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: gray;
 }/*# sourceMappingURL=main.css.map */
