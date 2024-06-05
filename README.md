@@ -2,7 +2,7 @@
 
 ## Demo link:
 
-Access game at https://szyi-roulette-game-a5af4347a399.herokuapp.com/
+Access game at https://js-roulette-game.onrender.com/
 
 ## Table of Content:
 
