@@ -1,10 +1,19 @@
-# ![Logo](/public/assets/avatars/full/Icons_29.png) Roulette Game
+# ![Logo](/assets/avatars/blank/Icons_29.png) Roulette Game
 
 A simple roulette game with interesting twists such as items.
 
 ## Demo link:
 
 Access game at https://js-roulette-game.onrender.com/
+
+<div style="display: flex;">
+<img src="/assets/screenshots/1.png" width="49.5%" />
+<img src="/assets/screenshots/2.png" width="49.5%" />
+</div>
+<div style="display: flex;">
+<img src="/assets/screenshots/3.png" width="49.5%" />
+<img src="/assets/screenshots/4.png" width="49.5%" />
+</div>
 
 ## License
 
