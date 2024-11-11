@@ -4,7 +4,7 @@ A simple roulette game with interesting twists such as items.
 
 ## Demo link:
 
-Access game at https://js-roulette-game.onrender.com/
+Access game at https://roulette-game-zeta.vercel.app/
 
 <div style="display: flex;">
 <img src="/assets/screenshots/1.png" width="49.5%" />
