@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roulette Game</title>
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="/assets/avatars/blank/Icons_29.png"
+    />
+    <link rel="stylesheet" href="./index.css" />
+    <script type="module" src="./main.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <section class="screen" id="start-screen">
+        <div class="topScreen">
+          <div class="topScreen__title">
+            <h1>Roulette</h1>
+            <h2>Game</h2>
+          </div>
+          <button class="button button--action" id="start-button">Start</button>
+          <button class="button button--action" id="about-button" disabled>
+            About
+          </button>
+          <button class="button button--action" id="settings-button" disabled>
+            Settings
+          </button>
+        </div>
+        <div class="footer">
+          <p>
+            Roulette Game by
+            <a href="https://github.com/szyi10/js-roulette-game">szyi10</a> -
+            v.1.1
+          </p>
+        </div>
+      </section>
+
+      <section class="screen" id="end-screen">
+        <div class="topScreen">
+          <div class="topScreen__title">
+            <h1 id="winner">Player</h1>
+            <h2>won!</h2>
+          </div>
+          <button class="button button--action" id="restart-button">
+            Try again
+          </button>
+          <button class="button button--action" id="exit-button">Exit</button>
+        </div>
+        <div class="footer">
+          <p>
+            Roulette Game by
+            <a href="https://github.com/szyi10/js-roulette-game">szyi10</a> -
+            v.1.1
+          </p>
+        </div>
+      </section>
+
+      <section class="screen" id="game-screen">
+        <div class="topScreen__title">
+          <h1>Roulette</h1>
+          <h2>Game</h2>
+        </div>
+        <div class="game">
+          <div class="player">
+            <div class="player__stats" id="player1-button">
+              <img
+                src="./assets/avatars/blank/Icons_03.png"
+                alt="Player 1"
+                width="64"
+                height="64"
+              />
+              <div class="player__text">
+                <span>Player 1</span>
+                <p id="player1-lives">Lives: 5</p>
+              </div>
+            </div>
+            <div class="player__items" id="player1-items"></div>
+          </div>
+          <div class="table">
+            <img
+              id="shotgun-button"
+              src="./assets/Shotgun.png"
+              alt="Shotgun"
+              width="186"
+              height="186"
+            />
+            <div class="shells">
+              <div id="shells"></div>
+              <p id="shell-text"></p>
+            </div>
+            <p id="output"></p>
+          </div>
+          <div class="player">
+            <div class="player__stats" id="player2-button">
+              <img
+                src="./assets/avatars/blank/Icons_29.png"
+                alt="Player 2"
+                width="64"
+                height="64"
+              />
+              <div class="player__text">
+                <span>Player 2</span>
+                <p id="player2-lives">Lives: 5</p>
+              </div>
+            </div>
+            <div class="player__items" id="player2-items"></div>
+          </div>
+        </div>
+        <div class="footer">
+          <p>
+            Roulette Game by
+            <a href="https://github.com/szyi10/js-roulette-game">szyi10</a> -
+            v.1.1
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <audio src="./assets/sounds/regular_shot.mp3" id="regular-sound"></audio>
+    <audio src="./assets/sounds/empty_shot.mp3" id="empty-sound"></audio>
+    <audio src="./assets/sounds/shell.mp3" id="shell-sound"></audio>
+  </body>
+</html>

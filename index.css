@@ -1,0 +1,282 @@
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap");
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::selection {
+  background-color: #ff000091;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  accent-color: red;
+  background: #000;
+  color: #fff;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+#game-screen {
+  display: none;
+}
+
+#game-screen .footer {
+  position: absolute;
+  bottom: 0;
+}
+
+#end-screen {
+  display: none;
+}
+
+.button {
+  border: none;
+  font-family: inherit;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+}
+
+.button--action {
+  background: #ffbf00;
+  font-size: 18px;
+  width: 200px;
+  margin-top: 0.5em;
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.topScreen {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.topScreen__title {
+  text-align: center;
+}
+
+.topScreen__title h1 {
+  font-size: 3rem;
+  line-height: 1em;
+}
+
+.topScreen__title h2 {
+  font-size: 2.5rem;
+  color: #ff0000;
+}
+
+.footer {
+  color: #999;
+  width: 100%;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer a {
+  color: #fff;
+}
+
+.footer a:hover {
+  color: #ff0000;
+}
+
+.game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 600px;
+  margin: 30px 0;
+}
+
+.table {
+  height: 300px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.player {
+  width: 150px;
+  height: 300px;
+}
+
+.player__stats {
+  position: relative;
+  height: 200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+}
+
+.player__stats img {
+  margin: 10px auto;
+  image-rendering: pixelated;
+}
+
+.player__text {
+  width: 100%;
+  text-align: center;
+}
+
+.player__text span {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.player__items {
+  height: 100px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  column-gap: 5px;
+  row-gap: 5px;
+}
+
+.item {
+  width: 100%;
+  image-rendering: pixelated;
+  aspect-ratio: 1/1;
+}
+
+.player__stats.active {
+  border: 1px solid red;
+}
+
+.player__stats.active::before {
+  content: "Playing";
+  position: absolute;
+  bottom: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ff0000;
+}
+
+.shells {
+  position: absolute;
+  bottom: 0px;
+  transform: translateX(-50%);
+  left: 50%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  pointer-events: none;
+  transition: all 300ms ease;
+}
+
+.shells.slide-in {
+  animation: slideIn 500ms ease-in-out;
+  right: 50%;
+}
+
+.shells.slide-out {
+  animation: slideOut 500ms ease-in-out;
+  opacity: 0;
+}
+
+#shells {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+#shell-text {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.shell {
+  object-fit: cover;
+  height: 40px;
+  image-rendering: pixelated;
+}
+
+#shotgun-button {
+  image-rendering: pixelated;
+  cursor: pointer;
+  rotate: -90deg;
+}
+
+#shotgun-button.toPlayer1 {
+  rotate: 0deg;
+  transform: scaleX(-1);
+}
+
+#shotgun-button.toPlayer2 {
+  rotate: 0deg;
+  transform: scale(1);
+}
+
+.toPlayer1 {
+  animation: toPlayer1 500ms;
+}
+
+.toPlayer2 {
+  animation: toPlayer1 500ms;
+}
+
+#output {
+  position: absolute;
+  top: 0;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
